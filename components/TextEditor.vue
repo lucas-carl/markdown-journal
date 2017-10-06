@@ -1,18 +1,10 @@
 <template>
-  <div class="text-editor">
-    <a class="btn" href="#" @click.prevent="addStrong">B</a>
-    <a class="btn" href="#" @click.prevent="addItalic">I</a>
-    <a class="btn" href="#" @click.prevent="addLink">&lt;a&gt;</a>
-    <a class="btn" href="#" @click.prevent="addCode">&lt;/&gt;</a>
-
-    <textarea class="text-editor" :value="inputValue"
-      @input="getInput($event.target.value)"
-      @keydown.tab.prevent="addTab"
-      ref="editor">
-    </textarea>
-
-    <div v-html="compiledMarkDown"></div>
-  </div>
+  <textarea class="text-editor" :value="inputValue"
+    @input="getInput($event.target.value)"
+    @keydown.tab.prevent="addTab"
+    placeholder="Write something"
+    ref="editor">
+  </textarea>
 </template>
 
 <script>
@@ -54,6 +46,8 @@
 
         this.$refs.editor.value = this.inputText
         this.$refs.editor.focus()
+
+        this.$emit('markdown', this.compiledMarkDown)
       },
       addTab() {
         this.updateText('\n  ')
