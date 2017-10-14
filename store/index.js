@@ -2,7 +2,7 @@ import axios from '~/plugins/axios'
 
 export const state = () => ({
 	authUser: null,
-	authenticated: false,
+	authenticated: !!localStorage.getItem('auth_user'),
 	files: null,
 	openDocument: null
 })
@@ -11,18 +11,41 @@ export const mutations = {
 	SET_USER: (state, user) => {
 		state.authUser = user
 	},
-	AUTHENTICATED: (state) => {
-		state.authenticated = !state.authenticated
-	},
 	SET_FILES: (state, files) => {
 		state.files = files
 	},
 	OPEN_DOCUMENT: (state, doc) => {
 		state.openDocument = doc
+	},
+	LOGIN: (state) => {
+		state.authenticated = true
+	},
+	LOGOUT: (state) => {
+		state.authenticated = false
 	}
 }
 
 export const actions = {
+	async login ({ commit }, credentials) {
+		await axios.post('https://markdown.lucascarl.com/auth/login', getFormData(credentials)).then((response) => {
+			if (response.status === 200) {
+				localStorage.setItem('auth_user', response.data.email)
+				commit('SET_USER', response.data)
+				commit('LOGIN')
+			}
+		}, (errorResponse) => {
+			if (errorResponse.status === 401) {
+				console.warn('Bad credentials!')
+			}
+
+			console.warn(errorResponse.body)
+		})
+	},
+	async logout ({ commit }) {
+		localStorage.removeItem('auth_user')
+		commit('SET_USER', null)
+		commit('LOGOUT')
+	},
 	async loadFiles ({ commit }) {
 		let { data } = await axios.get('https://markdown.lucascarl.com/files')
 		commit('SET_FILES', data)
@@ -56,6 +79,9 @@ export const actions = {
 export const getters = {
 	user: (state) => {
 		return state.authUser
+	},
+	isLoggedIn: (state) => {
+		return state.authenticated
 	},
 	openDocument: (state) => {
 		return state.openDocument

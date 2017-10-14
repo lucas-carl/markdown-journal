@@ -46,7 +46,7 @@
     },
 
 		created() {
-			this.$store.dispatch('openFile', 1)
+			this.$store.dispatch('openFile', 200)
 		},
 
     methods: {
@@ -56,7 +56,7 @@
 				this.saveDocument()
       },
 			saveDocument() {
-				this.$store.dispatch('saveFile', { id: 1, title: 'Test File', content: this.raw })
+				this.$store.dispatch('saveFile', { id: this.document.id, title: this.document.title, content: this.raw })
 			}
     },
 
@@ -69,7 +69,7 @@
 			}
 		},
 
-		// middleware: 'auth'
+		middleware: 'auth'
 
   }
 </script>
