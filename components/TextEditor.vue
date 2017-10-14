@@ -2,6 +2,7 @@
   <textarea class="text-editor" :value="inputValue"
     @input="getInput($event.target.value)"
     @keydown.tab.prevent="addTab"
+		@keydown="save"
     placeholder="Write something"
     ref="editor">
   </textarea>
@@ -25,6 +26,10 @@
       }
     },
 
+		mounted() {
+			this.$emit('markdown', this.inputValue, this.compiledMarkDown)
+		},
+
     computed: {
       inputValue() {
         return this.inputText || this.value
@@ -35,6 +40,12 @@
     },
 
     methods: {
+			save(e) {
+				if (e.key === 's' && (e.ctrlKey === true || e.metaKey === true)) {
+					e.preventDefault()
+					this.$emit('cmd-s')
+				}
+			},
       getInput(value) {
         this.inputText = value
         this.updateText()
@@ -47,7 +58,7 @@
         this.$refs.editor.value = this.inputText
         this.$refs.editor.focus()
 
-        this.$emit('markdown', this.compiledMarkDown)
+        this.$emit('markdown', this.inputText, marked(this.inputText, { sanitize: true }))
       },
       addTab() {
         this.updateText('\n  ')

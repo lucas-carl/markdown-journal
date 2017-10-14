@@ -19,7 +19,10 @@
         </a>
       </div>
 
-      <text-editor @markdown="text => updateText(text)" ref="editor"></text-editor>
+      <text-editor :value="document.content" ref="editor" v-if="document"
+      	@markdown="(raw, text) => updateText(raw, text)"
+				@cmd-s="saveDocument()">
+			</text-editor>
     </section>
 
     <section class="page-content" v-html="text"></section>
@@ -33,7 +36,8 @@
 
     data() {
       return {
-        text: ''
+        text: '',
+				raw: ''
       }
     },
 
@@ -41,11 +45,31 @@
       TextEditor
     },
 
+		created() {
+			this.$store.dispatch('openFile', 1)
+		},
+
     methods: {
-      updateText(val) {
+      updateText(raw, val) {
+				this.raw = raw
         this.text = val
-      }
-    }
+				this.saveDocument()
+      },
+			saveDocument() {
+				this.$store.dispatch('saveFile', { id: 1, title: 'Test File', content: this.raw })
+			}
+    },
+
+		computed: {
+			files() {
+				return this.$store.getters.files
+			},
+			document() {
+				return this.$store.getters.openDocument
+			}
+		},
+
+		// middleware: 'auth'
 
   }
 </script>

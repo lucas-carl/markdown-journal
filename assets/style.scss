@@ -6,6 +6,10 @@ $light: #f5f5fa;
 $border: #e6e6eb;
 $dark: #000;
 
+html, body {
+	overflow: hidden;
+}
+
 main {
   display: flex;
 }
@@ -47,6 +51,7 @@ section {
     height: 100%;
     padding: 2em;
     overflow-y: auto;
+		resize: none;
   }
 }
 
