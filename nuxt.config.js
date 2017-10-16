@@ -20,7 +20,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#3B8070' },
+  loading: { color: '#5c5ce6' },
   /*
   ** Build configuration
   */
@@ -39,7 +39,7 @@ module.exports = {
       }
     },
 
-		vendor: ['axios']
+		vendor: ['axios', 'marked']
   },
 
 	mode: 'spa'

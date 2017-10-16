@@ -85,6 +85,9 @@ export const getters = {
 	},
 	openDocument: (state) => {
 		return state.openDocument
+	},
+	files: (state) => {
+		return state.files
 	}
 }
 

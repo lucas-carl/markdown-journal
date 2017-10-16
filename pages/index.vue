@@ -1,64 +1,51 @@
 <template>
-  <main>
-    <section class="page-editor">
-      <div class="editor-head">
-        <a class="icon-link link-back" href="#">
-          <i class="material-icons">keyboard_arrow_left</i>
-        </a>
-        <a class="icon-link" href="#" @click.prevent="$refs.editor.addStrong">
-          <i class="material-icons">format_bold</i>
-        </a>
-        <a class="icon-link" href="#" @click.prevent="$refs.editor.addItalic">
-          <i class="material-icons">format_italic</i>
-        </a>
-        <a class="icon-link" href="#" @click.prevent="$refs.editor.addCode">
-          <i class="material-icons">code</i>
-        </a>
-        <a class="icon-link" href="#" @click.prevent="$refs.editor.addLink">
-          <i class="material-icons">link</i>
-        </a>
-      </div>
+	<main>
+		<section class="page-sidebar">
+			<div class="file-tree">
+				<a class="file-item" v-for="file in files"
+					:key="file.id" :class="{active: (document && file.id == document.id)}"
+					href="#" @click.prevent="openFile(file.id)">
+					<p>{{ file.title }}</p>
+					<i class="material-icons">keyboard_arrow_right</i>
+				</a>
+			</div>
 
-      <text-editor :value="document.content" ref="editor" v-if="document"
-      	@markdown="(raw, text) => updateText(raw, text)"
-				@cmd-s="saveDocument()">
-			</text-editor>
+      <footer>
+        <a class="icon-link" href="#">
+          <i class="material-icons">create_new_folder</i>
+        </a>
+				<a class="icon-link icon-right" href="#">
+          <i class="material-icons">note_add</i>
+        </a>
+      </footer>
     </section>
 
-    <section class="page-content" v-html="text"></section>
-  </main>
+    <section class="page-content" v-html="compiledMarkDown"></section>
+	</main>
 </template>
 
 <script>
-  import TextEditor from '~/components/TextEditor.vue'
+	import marked from 'marked'
 
-  export default {
-
-    data() {
-      return {
-        text: '',
-				raw: ''
-      }
-    },
-
-    components: {
-      TextEditor
-    },
+	export default {
 
 		created() {
-			this.$store.dispatch('openFile', 200)
+			this.$store.dispatch('loadFiles').then(() => {
+				if (this.files.length > 0) {
+					this.$store.dispatch('openFile', this.files[0].id)
+				}
+			})
 		},
 
-    methods: {
-      updateText(raw, val) {
-				this.raw = raw
-        this.text = val
-				this.saveDocument()
-      },
-			saveDocument() {
-				this.$store.dispatch('saveFile', { id: this.document.id, title: this.document.title, content: this.raw })
+		methods: {
+			openFile(id) {
+				if (id === this.document.id) {
+					this.$router.push('edit/' + id)
+				}
+
+				this.$store.dispatch('openFile', id)
 			}
-    },
+		},
 
 		computed: {
 			files() {
@@ -66,10 +53,17 @@
 			},
 			document() {
 				return this.$store.getters.openDocument
+			},
+			compiledMarkDown() {
+				if (!this.document) {
+					return ''
+				}
+
+				return marked(this.document.content, { sanitize: true })
 			}
 		},
 
 		middleware: 'auth'
 
-  }
+	}
 </script>

@@ -24,22 +24,22 @@ section {
   display: flex;
   flex-direction: column;
 
-  .editor-head {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 1em 2em;
-    border-bottom: 1px solid $border;
+	header {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		padding: 1em 2rem;
+		border-bottom: 1px solid $border;
 
-    .icon-link {
-      margin-left: 1em;
-    }
+		.icon-link {
+			margin-left: 1em;
+		}
 
-    .link-back {
-      margin-right: auto;
-      margin-left: 0;
-    }
-  }
+		.link-back {
+			margin-right: auto;
+			margin-left: 0;
+		}
+	}
 
   .text-editor {
     background: transparent;
@@ -49,10 +49,81 @@ section {
     box-shadow: none;
 
     height: 100%;
-    padding: 2em;
+    padding: 2em 2rem;
     overflow-y: auto;
 		resize: none;
   }
+}
+
+.page-sidebar {
+  background: $light;
+  display: flex;
+  flex-direction: column;
+	max-width: 360px;
+
+	footer {
+		margin-top: auto;
+		display: flex;
+		align-items: center;
+		padding: 1em 2rem;
+		border-top: 1px solid $border;
+
+		.icon-right {
+			margin-left: auto;
+		}
+	}
+
+	.file-tree {
+		padding-top: 1em;
+	}
+
+	.file-item {
+		position: relative;
+		display: block;
+		padding: 1em 2rem;
+		font-weight: bold;
+		color: rgba($dark, .75);
+	  transition: .2s;
+
+		p {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: 100%;
+			margin: 0;
+		}
+
+		.material-icons {
+			position: absolute;
+			font-size: 2em;
+			top: 50%;
+			right: 1rem;
+			transform: translateY(-50%);
+			visibility: hidden;
+		}
+
+		&.active {
+			background: $primary;
+			color: #fff;
+			padding-right: 3rem;
+
+			.material-icons {
+				visibility: visible;
+			}
+		}
+
+		&:hover,
+		&:focus {
+			color: $dark;
+			text-decoration: none;
+			outline: none;
+
+			&.active {
+				background: darken($primary, 5%);
+				color: #fff;
+			}
+		}
+	}
 }
 
 .page-content {
