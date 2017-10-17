@@ -6,6 +6,8 @@ $light: #f5f5fa;
 $border: #e6e6eb;
 $dark: #000;
 
+$shadow24dp: 0 1em 1.5em .25em rgba($dark, .15), 0 .5em .75em rgba($dark, .2);
+
 html, body {
 	overflow: hidden;
 }
@@ -133,9 +135,10 @@ section {
 }
 
 .icon-link {
-  line-height: 1;
+  line-height: 0;
   color: rgba($dark, .75);
   transition: .2s;
+	text-decoration: none;
 
   &:hover,
   &:focus {
@@ -151,4 +154,140 @@ h1, h2, h3, h4, h5, h6 {
   &:first-child {
     margin-top: 0;
   }
+}
+
+.modal-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 1em;
+
+	.modal-bg {
+		background: rgba($dark, .5);
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	.modal {
+		position: relative;
+		background: #fff;
+		max-width: 960px;
+		min-width: 50vw;
+		z-index: 10;
+		box-shadow: $shadow24dp;
+	}
+
+	.modal-body {
+		padding: 2em 2rem;
+		padding-bottom: 0;
+	}
+
+	footer {
+		display: flex;
+		justify-content: flex-end;
+		padding: 1em 1rem;
+		padding-right: 1rem;
+	}
+
+	.modal-title {
+		margin-bottom: .5em;
+	}
+}
+
+.button {
+	font-weight: 500;
+	border: none;
+	border-radius: 0;
+	padding: .75em 1.75em !important;
+	transition: .2s ease;
+}
+
+.cta-button {
+	background: $primary;
+	color: #fff !important;
+
+	&:hover,
+	&:focus {
+		background: darken($primary, 5%);
+	}
+}
+
+.ghost-button {
+	color: $primary !important;
+
+	&:hover,
+	&:focus {
+		background: rgba($dark, .05);
+	}
+}
+
+.custom-input {
+	width: 100%;
+	font-size: 1rem !important;
+	background: transparent;
+	border: none !important;
+	border-radius: 0 !important;
+	border-bottom: 3px solid rgba($dark, .5) !important;
+	padding: .5em 0 !important;
+	transition: .2s ease;
+
+	&:hover {
+		border-bottom-color: rgba($dark, .75) !important;
+	}
+
+	&:active,
+	&:focus {
+		border-bottom-color: $primary !important;
+		box-shadow: none !important;
+	}
+}
+
+.floating-label {
+	position: relative;
+	display: block;
+
+	input {
+		padding-top: 1.15rem !important;
+
+		&::placeholder {
+			opacity: 1;
+			transition: .2s ease;
+		}
+
+		&:placeholder-shown:not(:focus)::placeholder {
+			opacity: 0;
+		}
+
+		&:placeholder-shown:not(:focus) + label {
+			color: rgba($dark, .5);
+			font-size: 1rem;
+			top: 1.15em;
+		}
+	}
+
+	label {
+		position: absolute;
+		left: 0;
+		top: 0;
+		cursor: text;
+		font-size: .75em;
+		color: $primary;
+		margin: 0;
+		pointer-events: none;
+		transition: .2s ease;
+	}
+}
+
+// deprecated
+.mb-right {
+	margin-right: 1em;
 }

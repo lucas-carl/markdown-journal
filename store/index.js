@@ -62,7 +62,11 @@ export const actions = {
 			throw error
 		}
 	},
-	async createFile ({commit}, file) {
+	async createFile ({ commit }, title) {
+		let file = {
+			title, user_id: 'mail@lucascarl.com'
+		}
+
 		try {
 			let { data } = await axios.post('https://markdown.lucascarl.com/files', getFormData(file))
 			commit('OPEN_DOCUMENT', data)
@@ -70,7 +74,7 @@ export const actions = {
 			throw error
 		}
 	},
-	async saveFile ({commit}, file) {
+	async saveFile ({ commit }, file) {
 		let { data } = await axios.put('https://markdown.lucascarl.com/files/' + file.id, getFormData(file))
 		commit('OPEN_DOCUMENT', data)
 	}

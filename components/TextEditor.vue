@@ -4,7 +4,7 @@
     @keydown.tab.prevent="addTab"
 		@keydown="save"
     placeholder="Write something"
-    ref="editor">
+    ref="editor" autofocus>
   </textarea>
 </template>
 
@@ -35,6 +35,10 @@
         return this.inputText || this.value
       },
       compiledMarkDown() {
+				if (!this.inputValue) {
+					return ''
+				}
+
         return marked(this.inputValue, { sanitize: true })
       }
     },

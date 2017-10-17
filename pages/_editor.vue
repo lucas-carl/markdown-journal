@@ -2,9 +2,9 @@
   <main>
     <section class="page-editor">
       <header>
-        <a class="icon-link link-back" href="/">
+        <router-link class="icon-link link-back" to="/">
           <i class="material-icons">keyboard_arrow_left</i>
-        </a>
+        </router-link>
         <a class="icon-link" href="#" @click.prevent="$refs.editor.addStrong">
           <i class="material-icons">format_bold</i>
         </a>
@@ -46,11 +46,11 @@
     },
 
 		mounted() {
-			if (!this.$route.params.document) {
+			if (!this.$route.params.editor) {
 				this.$router.push('/')
 			}
 
-			this.$store.dispatch('openFile', this.$route.params.document)
+			this.$store.dispatch('openFile', this.$route.params.editor)
 		},
 
     methods: {
