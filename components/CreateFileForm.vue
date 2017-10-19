@@ -12,7 +12,7 @@
 
 			<footer>
 				<button class="button ghost-button mb-right"
-					@click="$emit('close')">
+					type="button" @click="$emit('close')">
 					CANCEL
 				</button>
 				<button class="button cta-button" type="submit">

@@ -2,7 +2,7 @@ import axios from '~/plugins/axios'
 
 export const state = () => ({
 	authUser: null,
-	authenticated: !!localStorage.getItem('auth_user'),
+	authenticated: !!localStorage.getItem('auth_token'),
 	files: null,
 	openDocument: null
 })
@@ -27,9 +27,9 @@ export const mutations = {
 
 export const actions = {
 	async login ({ commit }, credentials) {
-		await axios.post('https://markdown.lucascarl.com/auth/login', getFormData(credentials)).then((response) => {
+		await axios.post('https://markdown.lucascarl.com/user/login', getFormData(credentials)).then((response) => {
 			if (response.status === 200) {
-				localStorage.setItem('auth_user', response.data.email)
+				localStorage.setItem('auth_token', response.data.token)
 				commit('SET_USER', response.data)
 				commit('LOGIN')
 			}
@@ -42,7 +42,7 @@ export const actions = {
 		})
 	},
 	async logout ({ commit }) {
-		localStorage.removeItem('auth_user')
+		localStorage.removeItem('auth_token')
 		commit('SET_USER', null)
 		commit('LOGOUT')
 	},
