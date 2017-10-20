@@ -66,6 +66,11 @@
 			fileCreated() {
 				this.showCreateForm = false
 				this.$store.dispatch('loadFiles')
+			},
+			logout() {
+				this.$store.dispatch('logout').then(() => {
+					this.$router.push('login')
+				})
 			}
 		},
 
