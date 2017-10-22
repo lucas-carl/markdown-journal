@@ -5,7 +5,7 @@
 				<h4 class="modal-title">Create new document</h4>
 
 				<div class="form-group floating-label">
-					<input class="custom-input" type="text" v-model="title" placeholder="Title">
+					<input class="custom-input" type="text" v-model="title" placeholder="Title" required autofocus>
 					<label>Title</label>
 				</div>
 

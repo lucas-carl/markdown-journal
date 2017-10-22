@@ -27,6 +27,10 @@
 				<i class="material-icons">more_vert</i>
 			</a>
 			<div class="dropdown" v-if="showFileDropdown">
+				<a class="item" href="#" @click.prevent="showEditForm = true">
+					<i class="material-icons">edit</i>
+					<span>edit</span>
+				</a>
 				<a class="item" href="#" @click.prevent="archiveFile(document.id)">
 					<i class="material-icons">archive</i>
 					<span>archive file</span>
@@ -40,6 +44,8 @@
 			@close="showCreateForm = false"
 			@success="fileCreated" v-if="showCreateForm">
 		</create-file-form>
+
+		<edit-file-form :file="document" @close="showEditForm = false" @success="fileCreated" v-if="showEditForm"></edit-file-form>
 	</main>
 </template>
 
@@ -47,18 +53,21 @@
 	import marked from 'marked'
 
 	import CreateFileForm from '~/components/CreateFileForm.vue'
+	import EditFileForm from '~/components/EditFileForm.vue'
 
 	export default {
 
 		data() {
 			return {
 				showCreateForm: false,
+				showEditForm: false,
 				showFileDropdown: false
 			}
 		},
 
 		components: {
-			CreateFileForm
+			CreateFileForm,
+			EditFileForm
 		},
 
 		created() {
@@ -81,8 +90,11 @@
 				this.$store.dispatch('openFile', id)
 			},
 			fileCreated() {
+				this.showEditForm = false
 				this.showCreateForm = false
-				this.$store.dispatch('loadFiles')
+				this.showFileDropdown = false
+
+				this.loadFiles()
 			},
 			logout() {
 				this.$store.dispatch('logout').then(() => {
