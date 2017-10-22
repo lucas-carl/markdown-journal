@@ -47,8 +47,16 @@ export const actions = {
 		commit('LOGOUT')
 	},
 	async loadFiles ({ commit }) {
-		let { data } = await axios.get('https://markdown.lucascarl.com/files')
-		commit('SET_FILES', data)
+		try {
+			let { data } = await axios.get('https://markdown.lucascarl.com/files')
+			commit('SET_FILES', data)
+		} catch (error) {
+			if (error.response && error.response.status === 401) {
+				window.location = '/login'
+			}
+
+			throw error
+		}
 	},
 	async openFile ({ commit }, id) {
 		try {
@@ -57,6 +65,8 @@ export const actions = {
 		} catch (error) {
 			if (error.response && error.response.status === 404) {
 				throw new Error('File not found')
+			} else if (error.response && error.response.status === 401) {
+				window.location = '/login'
 			}
 
 			throw error
