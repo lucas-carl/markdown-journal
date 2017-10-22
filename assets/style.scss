@@ -6,6 +6,7 @@ $light: #f5f5fa;
 $border: #e6e6eb;
 $dark: #000;
 
+$shadow12dp: 0 .5em 1.5em .125em rgba($dark, .15), 0 .25em .375em rgba($dark, .2);
 $shadow24dp: 0 1em 1.5em .25em rgba($dark, .15), 0 .5em .75em rgba($dark, .2);
 
 html, body {
@@ -132,6 +133,56 @@ section {
   height: 100vh;
   overflow-y: auto;
   padding: 2em;
+}
+
+.page-menu {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 8;
+
+	.icon-link {
+		display: block;
+		padding-top: 1rem;
+		padding-right: .5rem;
+		color: rgba($dark, .5);
+	}
+
+	.dropdown {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		background: #fff;
+		box-shadow: $shadow12dp;
+		padding: .5em 0;
+
+		.item {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			white-space: nowrap;
+			padding: .5em 1em;
+			cursor: pointer;
+
+			i.material-icons {
+				color: rgba($dark, .625);
+				font-size: 1.5em;
+				display: inline;
+				margin-right: .5em;
+			}
+
+			&:hover,
+			&:focus {
+				background: $light;
+
+				i.material-icons {
+					color: rgba($dark, .75);
+				}
+			}
+
+			@extend .icon-link;
+		}
+	}
 }
 
 .icon-link {
@@ -284,6 +335,44 @@ h1, h2, h3, h4, h5, h6 {
 		margin: 0;
 		pointer-events: none;
 		transition: .2s ease;
+	}
+}
+
+.link {
+	color: $primary;
+
+	&:hover,
+	&:focus {
+		color: darken($primary, 5%);
+	}
+}
+
+.files-list {
+	border-bottom: 1px solid $border;
+
+	.list-item {
+		display: flex;
+		color: rgba($dark, .75);
+		font-weight: 500;
+		text-decoration: none;
+		transition: .2s ease;
+		padding: .5em;
+
+		i.material-icons {
+			color: rgba($dark, .625);
+			font-size: 1.5em;
+			margin-left: auto;
+		}
+
+		&:hover,
+		&:focus {
+			background: $light;
+			color: $dark;
+
+			i.material-icons {
+				color: rgba($dark, .75);
+			}
+		}
 	}
 }
 

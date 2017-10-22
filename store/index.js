@@ -22,6 +22,10 @@ export const mutations = {
 	},
 	LOGOUT: (state) => {
 		state.authenticated = false
+	},
+	ARCHIVED_FILE: (state) => {
+		state.openDocument = null
+		state.files = null
 	}
 }
 
@@ -46,9 +50,16 @@ export const actions = {
 		commit('SET_USER', null)
 		commit('LOGOUT')
 	},
-	async loadFiles ({ commit }) {
+	async loadFiles ({ commit }, withArchived = false) {
 		try {
-			let { data } = await axios.get('https://markdown.lucascarl.com/files')
+			let url = 'https://markdown.lucascarl.com/files'
+
+			if (withArchived) {
+				url += '/all'
+			}
+
+			let { data } = await axios.get(url)
+
 			commit('SET_FILES', data)
 		} catch (error) {
 			if (error.response && error.response.status === 401) {
@@ -87,6 +98,14 @@ export const actions = {
 	async saveFile ({ commit }, file) {
 		let { data } = await axios.put('https://markdown.lucascarl.com/files/' + file.id, getFormData(file))
 		commit('OPEN_DOCUMENT', data)
+	},
+	async archiveFile ({ commit }, id) {
+		await axios.delete('https://markdown.lucascarl.com/files/' + id)
+		commit('ARCHIVED_FILE')
+	},
+	async unarchiveFile ({ commit }, id) {
+		await axios.post('https://markdown.lucascarl.com/files/' + id + '/restore')
+		commit('ARCHIVED_FILE')
 	}
 }
 

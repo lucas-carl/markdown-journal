@@ -1,8 +1,8 @@
 <template>
 	<main>
-		<section class="page-sidebar">
+		<section class="page-sidebar" @click.prevent="hideDropdown">
 			<div class="file-tree">
-				<a class="file-item" v-for="file in files"
+				<a class="file-item" v-for="file in validFiles"
 					:key="file.id" :class="{active: (document && file.id == document.id)}"
 					href="#" @click.prevent="openFile(file.id)">
 					<p>{{ file.title }}</p>
@@ -22,9 +22,22 @@
       </footer>
     </section>
 
-    <section class="page-content" v-html="compiledMarkDown"></section>
+		<div class="page-menu">
+			<a class="icon-link" href="#" @click.prevent="showFileDropdown = !showFileDropdown">
+				<i class="material-icons">more_vert</i>
+			</a>
+			<div class="dropdown" v-if="showFileDropdown">
+				<a class="item" href="#" @click.prevent="archiveFile(document.id)">
+					<i class="material-icons">archive</i>
+					<span>archive file</span>
+				</a>
+			</div>
+		</div>
 
-		<create-file-form @close="showCreateForm = false"
+    <section class="page-content" v-html="compiledMarkDown" @click.prevent="hideDropdown"></section>
+
+		<create-file-form :archived-files="archivedFiles"
+			@close="showCreateForm = false"
 			@success="fileCreated" v-if="showCreateForm">
 		</create-file-form>
 	</main>
@@ -39,7 +52,8 @@
 
 		data() {
 			return {
-				showCreateForm: false
+				showCreateForm: false,
+				showFileDropdown: false
 			}
 		},
 
@@ -48,14 +62,17 @@
 		},
 
 		created() {
-			this.$store.dispatch('loadFiles').then(() => {
-				if (!this.document && this.files.length > 0) {
-					this.$store.dispatch('openFile', this.files[0].id)
-				}
-			})
+			this.loadFiles()
 		},
 
 		methods: {
+			loadFiles() {
+				this.$store.dispatch('loadFiles', true).then(() => {
+					if (!this.document && this.validFiles.length > 0) {
+						this.$store.dispatch('openFile', this.validFiles[0].id)
+					}
+				})
+			},
 			openFile(id) {
 				if (id === this.document.id) {
 					this.$router.push(id)
@@ -71,6 +88,18 @@
 				this.$store.dispatch('logout').then(() => {
 					this.$router.push('login')
 				})
+			},
+			archiveFile(id) {
+				this.hideDropdown()
+
+				this.$store.dispatch('archiveFile', id).then(() => {
+					this.loadFiles()
+				})
+			},
+			hideDropdown() {
+				if (this.showFileDropdown === true) {
+					this.showFileDropdown = false
+				}
 			}
 		},
 
@@ -87,6 +116,20 @@
 				}
 
 				return marked(this.document.content, { sanitize: true })
+			},
+			validFiles() {
+				if (!this.files) {
+					return null
+				}
+
+				return this.files.filter(file => file.not_deleted === '1')
+			},
+			archivedFiles() {
+				if (!this.files) {
+					return null
+				}
+
+				return this.files.filter(file => file.not_deleted === '0')
 			}
 		},
 
