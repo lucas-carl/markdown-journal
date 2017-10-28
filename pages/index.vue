@@ -35,6 +35,11 @@
 					<i class="material-icons">archive</i>
 					<span>archive file</span>
 				</a>
+				<hr>
+				<a class="item highlight-red" href="#" @click.prevent="logout">
+					<i class="material-icons">exit_to_app</i>
+					<span>log out</span>
+				</a>
 			</div>
 		</div>
 

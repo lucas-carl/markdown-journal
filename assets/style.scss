@@ -5,6 +5,7 @@ $primary: #5c5ce6;
 $light: #f5f5fa;
 $border: #e6e6eb;
 $dark: #000;
+$red: #e65c5c;
 
 $shadow12dp: 0 .5em 1.5em .125em rgba($dark, .15), 0 .25em .375em rgba($dark, .2);
 $shadow24dp: 0 1em 1.5em .25em rgba($dark, .15), 0 .5em .75em rgba($dark, .2);
@@ -180,7 +181,21 @@ section {
 				}
 			}
 
+			&.highlight-red,
+			&.highlight-red i.material-icons {
+				color: $red;
+
+				&:hover,
+				&:focus {
+					color: darken($red, 5%);
+				}
+			}
+
 			@extend .icon-link;
+		}
+
+		hr {
+			border-color: $border;
 		}
 	}
 }
@@ -283,6 +298,13 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
+.button-block {
+	display: block !important;
+	width: 100%;
+	max-width: 320px;
+	margin: auto;
+}
+
 .custom-input {
 	width: 100%;
 	font-size: 1rem !important;
@@ -375,6 +397,24 @@ h1, h2, h3, h4, h5, h6 {
 				color: rgba($dark, .75);
 			}
 		}
+	}
+}
+
+.login-container {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 6em;
+
+	.container-sm {
+		width: 100%;
+	}
+
+	.login-heading {
+		margin: 4em auto 0;
+	}
+
+	h1 {
+		margin: 0;
 	}
 }
 

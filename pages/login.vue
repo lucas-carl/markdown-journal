@@ -1,11 +1,21 @@
 <template>
 	<main>
 		<section class="login-container">
-			<form class="container" @submit.prevent="login">
-				<input type="email" v-model="email" autofocus>
-				<input type="password" v-model="password">
+			<div class="container-sm login-heading">
+				<h1>Markdown Journal</h1>
+			</div>
 
-				<input type="submit">
+			<form class="container-sm login-form" @submit.prevent="login">
+				<div class="form-group floating-label">
+					<input class="custom-input" type="email" v-model="email" placeholder="Email" required autofocus>
+					<label>Email</label>
+				</div>
+				<div class="form-group floating-label">
+					<input class="custom-input" type="password" v-model="password" placeholder="Password" required>
+					<label>Password</label>
+				</div>
+
+				<button class="button cta-button button-block" type="submit">Login</button>
 			</form>
 		</section>
 	</main>
