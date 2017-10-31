@@ -1,5 +1,6 @@
 @import "../node_modules/mockingbird-sass/scss/mockingbird";
 @import "../node_modules/mockingbird-sass/scss/config/variables";
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
 
 $primary: #5c5ce6;
 $light: #f5f5fa;
@@ -12,6 +13,7 @@ $shadow24dp: 0 1em 1.5em .25em rgba($dark, .15), 0 .5em .75em rgba($dark, .2);
 
 html, body {
 	overflow: hidden;
+	letter-spacing: .02em;
 }
 
 main {
@@ -27,6 +29,7 @@ section {
   background: $light;
   display: flex;
   flex-direction: column;
+	font-family: 'Roboto Mono', monospace;
 
 	header {
 		display: flex;

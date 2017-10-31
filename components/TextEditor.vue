@@ -2,7 +2,7 @@
   <textarea class="text-editor" :value="inputValue"
     @input="getInput($event.target.value)"
     @keydown.tab.prevent="addTab"
-		@keydown="save"
+		@keydown="keyHandle"
     placeholder="Write something"
     ref="editor" autofocus>
   </textarea>
@@ -44,10 +44,15 @@
     },
 
     methods: {
-			save(e) {
+			keyHandle(e) {
 				if (e.key === 's' && (e.ctrlKey === true || e.metaKey === true)) {
 					e.preventDefault()
 					this.$emit('cmd-s')
+				}
+
+				if (e.key === 'd' && (e.ctrlKey === true || e.metaKey === true)) {
+					e.preventDefault()
+					this.duplicateLine()
 				}
 			},
       getInput(value) {
@@ -64,6 +69,31 @@
 
         this.$emit('markdown', this.inputText, marked(this.inputText, { sanitize: true }))
       },
+			duplicateLine() {
+				let selection = this.getSelection()
+				let chunk = selection.text
+
+				if (selection.length === 0) {
+					while (!(chunk.match(/\n/g) || []).length) {
+						if (selection.start <= 1) {
+							break
+						}
+
+						this.setSelection(selection.start - 2, selection.end)
+						selection = this.getSelection()
+						chunk = selection.text
+					}
+
+					if (chunk.charAt(1) === '\\') {
+						chunk = chunk.substr(1)
+					}
+				}
+
+				if (selection.end > 1) {
+					this.setSelection(selection.end, selection.end)
+					this.replaceSelection('\n' + chunk)
+				}
+			},
       addTab() {
         this.updateText('\n  ')
       },
