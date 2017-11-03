@@ -25,7 +25,11 @@
     			<div class="dropdown" v-if="showDropdown">
             <a class="item" href="#" @click.prevent="addPhoto">
               <i class="material-icons">insert_photo</i>
-              <span>insert photo</span>
+              <span>photo</span>
+            </a>
+            <a class="item" href="#" @click.prevent="addTable">
+              <i class="material-icons">view_list</i>
+              <span>table</span>
             </a>
     			</div>
     		</div>
@@ -85,6 +89,10 @@
       addPhoto() {
         this.showDropdown = false
         this.$refs.editor.addPhoto()
+      },
+      addTable() {
+        this.showDropdown = false
+        this.$refs.editor.addTable()
       }
     },
 

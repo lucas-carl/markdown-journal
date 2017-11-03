@@ -93,6 +93,8 @@
 					this.setSelection(selection.end, selection.end)
 					this.replaceSelection('\n' + chunk)
 				}
+
+        this.updateText()
 			},
       addTab() {
         this.updateText('\n  ')
@@ -215,6 +217,16 @@
           this.setSelection(cursor, cursor + chunk.length)
           this.updateText()
         }
+      },
+      addTable() {
+        let selection = this.getSelection()
+        let chunk = '| abcd | efgh | jklm |\n|:----:|:----:|:----:|\n| nopq | qrst | uvwx |'
+
+        this.setSelection(selection.end, selection.end)
+        this.replaceSelection(chunk)
+
+        this.setSelection(selection.end, selection.end + chunk.length)
+        this.updateText()
       },
       getSelection() {
         let e = this.$refs.editor
