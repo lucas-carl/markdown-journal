@@ -143,13 +143,20 @@ section {
 	position: fixed;
 	top: 0;
 	right: 0;
+
+	.icon-link {
+		padding-top: 1rem;
+		padding-right: .5rem;
+		color: rgba($dark, .5);
+	}
+}
+
+.dropdown-menu {
+	font-family: normal;
 	z-index: 8;
 
 	.icon-link {
 		display: block;
-		padding-top: 1rem;
-		padding-right: .5rem;
-		color: rgba($dark, .5);
 	}
 
 	.dropdown {
@@ -166,6 +173,7 @@ section {
 			justify-content: flex-start;
 			white-space: nowrap;
 			padding: .5em 1em;
+			margin: 0 !important;
 			cursor: pointer;
 
 			i.material-icons {

@@ -22,7 +22,7 @@
       </footer>
     </section>
 
-		<div class="page-menu">
+		<div class="page-menu dropdown-menu">
 			<a class="icon-link" href="#" @click.prevent="showFileDropdown = !showFileDropdown">
 				<i class="material-icons">more_vert</i>
 			</a>

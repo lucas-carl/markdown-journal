@@ -17,15 +17,28 @@
         <a class="icon-link" href="#" @click.prevent="$refs.editor.addLink">
           <i class="material-icons">link</i>
         </a>
+
+        <div class="dropdown-menu">
+          <a class="icon-link" href="#" @click.prevent="showDropdown = true">
+            <i class="material-icons">expand_more</i>
+          </a>
+    			<div class="dropdown" v-if="showDropdown">
+            <a class="item" href="#" @click.prevent="addPhoto">
+              <i class="material-icons">insert_photo</i>
+              <span>insert photo</span>
+            </a>
+    			</div>
+    		</div>
       </header>
 
-      <text-editor :value="document.content" ref="editor" v-if="document"
+      <text-editor :value="document.content"
       	@markdown="(raw, text) => updateText(raw, text)"
-				@cmd-s="saveDocument()">
+				@cmd-s="saveDocument()" @click="hideDropdown"
+        ref="editor" v-if="document">
 			</text-editor>
     </section>
 
-    <section class="page-content" v-html="text"></section>
+    <section class="page-content" v-html="text" @click="hideDropdown"></section>
   </main>
 </template>
 
@@ -37,7 +50,8 @@
     data() {
       return {
         text: '',
-				raw: ''
+				raw: '',
+        showDropdown: false
       }
     },
 
@@ -61,7 +75,17 @@
       },
 			saveDocument() {
 				this.$store.dispatch('saveFile', { id: this.document.id, title: this.document.title, content: this.raw })
-			}
+			},
+      hideDropdown(e) {
+				if (this.showDropdown === true) {
+          e.preventDefault()
+					this.showDropdown = false
+				}
+			},
+      addPhoto() {
+        this.showDropdown = false
+        this.$refs.editor.addPhoto()
+      }
     },
 
 		computed: {

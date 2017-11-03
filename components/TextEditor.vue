@@ -195,6 +195,27 @@
         this.setSelection(cursor, cursor + chunk.length)
         this.updateText()
       },
+      addPhoto() {
+        let cursor, link
+        let selection = this.getSelection()
+        let chunk = selection.text
+
+        link = prompt('', 'http://')
+
+        let urlRegex = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi) // eslint-disable-line no-useless-escape
+
+        if (link && link !== 'http://' && urlRegex.test(link)) {
+          let div = document.createElement('div')
+          div.appendChild(document.createTextNode(link))
+          let sanitized = div.innerHTML
+
+          this.replaceSelection('![Image](' + sanitized + ')')
+          cursor = selection.start + 1
+
+          this.setSelection(cursor, cursor + chunk.length)
+          this.updateText()
+        }
+      },
       getSelection() {
         let e = this.$refs.editor
 
