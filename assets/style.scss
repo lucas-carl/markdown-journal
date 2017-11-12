@@ -29,7 +29,6 @@ section {
   background: $light;
   display: flex;
   flex-direction: column;
-	font-family: 'Roboto Mono', monospace;
 
 	header {
 		display: flex;
@@ -49,6 +48,7 @@ section {
 	}
 
   .text-editor {
+		font-family: 'Roboto Mono', monospace;
     background: transparent;
     border-radius: 0;
     border: none;
@@ -152,7 +152,6 @@ section {
 }
 
 .dropdown-menu {
-	font-family: normal;
 	z-index: 8;
 
 	.icon-link {
@@ -271,8 +270,6 @@ h1, h2, h3, h4, h5, h6 {
 	}
 
 	footer {
-		display: flex;
-		justify-content: flex-end;
 		padding: 1em 1rem;
 		padding-right: 1rem;
 	}
@@ -280,6 +277,11 @@ h1, h2, h3, h4, h5, h6 {
 	.modal-title {
 		margin-bottom: .5em;
 	}
+}
+
+.actions-container {
+	display: flex;
+	justify-content: flex-end;
 }
 
 .button {

@@ -45,6 +45,19 @@ export const actions = {
 			console.warn(errorResponse.body)
 		})
 	},
+	async register ({ commit }, credentials) {
+		await axios.post('https://markdown.lucascarl.com/user', getFormData(credentials)).then((response) => {
+			if (response.status === 204) {
+				console.log('Created new user')
+			}
+		}, (errorResponse) => {
+			if (errorResponse.status === 412) {
+				console.warn('Email already in use!')
+			}
+
+			console.warn(errorResponse.body)
+		})
+	},
 	async logout ({ commit }) {
 		localStorage.removeItem('auth_token')
 		commit('SET_USER', null)

@@ -9,10 +9,10 @@
 					<label>Title</label>
 				</div>
 
-				<a class="link" href="#" @click.prevent="showUnarchive = true" v-if="archivedFiles.length > 0">Re-open an archived file</a>
+				<a class="link" href="#" @click.prevent="showUnarchive = true" v-if="archivedFiles">Re-open an archived file</a>
 			</div>
 
-			<footer>
+			<footer class="actions-container">
 				<button class="button ghost-button mb-right"
 					type="button" @click="$emit('close')">
 					CANCEL
