@@ -30,6 +30,8 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
+
 	import Modal from '~/components/Modal.vue'
 	import UnarchiveFile from '~/components/UnarchiveFile.vue'
 
@@ -51,7 +53,7 @@
 			submitForm() {
 				if (this.title && this.title !== '') {
 					this.$store.dispatch('createFile', this.title).then(() => {
-						this.$router.push('/')
+						this.$router.push('/' + this.openDocument.id)
 					}).then(() => {
 						this.$emit('success')
 					})
@@ -61,6 +63,12 @@
 
 		props: {
 			archivedFiles: Array
+		},
+
+		computed: {
+			...mapGetters([
+				'openDocument'
+			])
 		}
 
 	}
