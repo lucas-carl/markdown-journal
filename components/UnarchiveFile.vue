@@ -14,10 +14,15 @@
 			</div>
 		</div>
 
-		<footer>
-			<button class="button ghost-button mb-right"
+		<footer class="actions-container">
+			<button class="button ghost-button float-left"
 				type="button" @click="$emit('close')">
 				CANCEL
+			</button>
+
+			<button class="button danger-button"
+				type="button" @click="purge">
+				DELETE ALL
 			</button>
 		</footer>
 	</modal>
@@ -41,6 +46,12 @@
 		methods: {
 			openFile(id) {
 				this.$store.dispatch('unarchiveFile', id).then(() => {
+					this.$emit('success')
+					window.location = '/'
+				})
+			},
+			purge() {
+				this.$store.dispatch('purgeArchive').then(() => {
 					this.$emit('success')
 					window.location = '/'
 				})

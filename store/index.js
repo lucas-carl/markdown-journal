@@ -119,6 +119,9 @@ export const actions = {
 	async unarchiveFile ({ commit }, id) {
 		await axios.post('https://markdown.lucascarl.com/files/' + id + '/restore')
 		commit('ARCHIVED_FILE')
+	},
+	async purgeArchive ({ commit }) {
+		await axios.delete('https://markdown.lucascarl.com/files')
 	}
 }
 

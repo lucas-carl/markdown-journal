@@ -8,11 +8,15 @@
 					<input class="custom-input" type="text" v-model="title" placeholder="Title" required autofocus>
 					<label>Title</label>
 				</div>
-
-				<a class="link" href="#" @click.prevent="showUnarchive = true" v-if="archivedFiles">Re-open an archived file</a>
 			</div>
 
 			<footer class="actions-container">
+				<button class="button ghost-button float-left"
+					type="button" @click="showUnarchive = true"
+					v-if="archivedFiles && archivedFiles.length > 0">
+					<span>ARCHIVE</span>
+					<i class="material-icons icon-lg">unarchive</i>
+				</button>
 				<button class="button ghost-button mb-right"
 					type="button" @click="$emit('close')">
 					CANCEL

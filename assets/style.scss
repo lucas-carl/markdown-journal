@@ -282,6 +282,22 @@ h1, h2, h3, h4, h5, h6 {
 .actions-container {
 	display: flex;
 	justify-content: flex-end;
+
+	.float-left {
+		margin-right: auto;
+	}
+
+	.button {
+		display: flex !important;
+		align-items: center;
+
+		i.material-icons {
+			font-size: 1.5em;
+			line-height: 1;
+			display: inline;
+			margin-left: .5em;
+		}
+	}
 }
 
 .button {
@@ -304,6 +320,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .ghost-button {
 	color: $primary !important;
+
+	&:hover,
+	&:focus {
+		background: rgba($dark, .05);
+	}
+}
+
+.danger-button {
+	color: $red !important;
 
 	&:hover,
 	&:focus {
