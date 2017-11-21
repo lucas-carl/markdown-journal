@@ -3,7 +3,7 @@
 		<section class="page-sidebar" @click.prevent="hideDropdown">
 			<div class="file-tree">
 				<a class="file-item" v-for="file in validFiles"
-					:key="file.id" :class="{active: (document && file.id == document.id)}"
+					:key="file.id" :class="{active: (document && file.id == document.id)}" :title="file.title"
 					href="#" @click.prevent="openFile(file.id)">
 					<p>{{ file.title }}</p>
 					<i class="material-icons">keyboard_arrow_right</i>
