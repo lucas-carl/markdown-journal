@@ -4,12 +4,16 @@ export const state = () => ({
 	authUser: null,
 	authenticated: !!localStorage.getItem('auth_token'),
 	files: null,
+	folders: null,
 	openDocument: null
 })
 
 export const mutations = {
 	SET_USER: (state, user) => {
 		state.authUser = user
+	},
+	SET_FOLDERS: (state, folders) => {
+		state.folders = folders
 	},
 	SET_FILES: (state, files) => {
 		state.files = files
@@ -62,6 +66,18 @@ export const actions = {
 		localStorage.removeItem('auth_token')
 		commit('SET_USER', null)
 		commit('LOGOUT')
+	},
+	async loadFolders ({ commit }) {
+		try {
+			let { data } = await axios.get('https://markdown.lucascarl.com/folders')
+			commit('SET_FOLDERS', data)
+		} catch (error) {
+			if (error.response && error.response.status === 401) {
+				window.location = '/login'
+			}
+
+			throw error
+		}
 	},
 	async loadFiles ({ commit }, withArchived = false) {
 		try {
@@ -137,6 +153,9 @@ export const getters = {
 	},
 	files: (state) => {
 		return state.files
+	},
+	folders: (state) => {
+		return state.folders
 	}
 }
 

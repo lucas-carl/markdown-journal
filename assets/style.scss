@@ -130,6 +130,19 @@ section {
 				color: #fff;
 			}
 		}
+
+		&.sorted {
+			padding-left: 3em;
+		}
+	}
+
+	.folder-item {
+		padding-left: 5rem;
+
+		.material-icons {
+			visibility: visible;
+			left: 2rem;
+		}
 	}
 }
 

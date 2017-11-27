@@ -2,12 +2,27 @@
 	<main>
 		<section class="page-sidebar" @click.prevent="hideDropdown">
 			<div class="file-tree">
-				<a class="file-item" v-for="file in validFiles"
-					:key="file.id" :class="{active: (document && file.id == document.id)}" :title="file.title"
-					href="#" @click.prevent="openFile(file.id)">
-					<p>{{ file.title }}</p>
-					<i class="material-icons">keyboard_arrow_right</i>
-				</a>
+				<template v-for="folder in sortedFiles">
+					<div class="file-item folder-item" :key="folder.id" :title="folder.title">
+						<i class="material-icons">folder_open</i>
+						<p>{{ folder.title }}</p>
+					</div>
+					<template v-for="file in folder.files">
+						<a class="file-item sorted" :class="{active: (document && file.id == document.id)}"
+							:key="file.id" :title="file.title"
+							href="#" @click.prevent="openFile(file.id)">
+							<p>{{ file.title }}</p>
+							<i class="material-icons">keyboard_arrow_right</i>
+						</a>
+					</template>
+				</template>
+				<template v-for="file in unsortedFiles">
+					<a class="file-item" :class="{active: (document && file.id == document.id)}" :title="file.title"
+						:key="file.id" href="#" @click.prevent="openFile(file.id)">
+						<p>{{ file.title }}</p>
+						<i class="material-icons">keyboard_arrow_right</i>
+					</a>
+				</template>
 			</div>
 
       <footer>
@@ -81,10 +96,12 @@
 
 		methods: {
 			loadFiles() {
-				this.$store.dispatch('loadFiles', true).then(() => {
-					if (!this.document && this.validFiles.length > 0) {
-						this.$store.dispatch('openFile', this.validFiles[0].id)
-					}
+				this.$store.dispatch('loadFolders').then(() => {
+					this.$store.dispatch('loadFiles', true).then(() => {
+						if (!this.document && this.validFiles.length > 0) {
+							this.$store.dispatch('openFile', this.validFiles[0].id)
+						}
+					})
 				})
 			},
 			openFile(id) {
@@ -133,6 +150,26 @@
 				}
 
 				return marked(this.document.content, { sanitize: true })
+			},
+			sortedFiles() {
+				let folders = this.$store.getters.folders
+
+				if (!folders || !this.validFiles) {
+					return null
+				}
+
+				folders.forEach(folder => {
+					folder.files = this.validFiles.filter(file => file.folder_id === folder.id)
+				})
+
+				return folders
+			},
+			unsortedFiles() {
+				if (!this.validFiles) {
+					return null
+				}
+
+				return this.validFiles.filter(file => !file.folder_id)
 			},
 			validFiles() {
 				if (!this.files) {
