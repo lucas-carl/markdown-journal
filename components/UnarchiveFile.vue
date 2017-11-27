@@ -6,9 +6,9 @@
 			<div class="files-list">
 				<div v-for="file in archivedFiles" :key="file.id">
 					<a class="list-item" href="#" @click.prevent="openFile(file.id)">
-						{{ file.title }}
+						<p>{{ file.title }}</p>
 
-						<i class="material-icons">unarchive</i>
+						<i class="material-icons float-right">unarchive</i>
 					</a>
 				</div>
 			</div>

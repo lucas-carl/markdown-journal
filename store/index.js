@@ -138,6 +138,9 @@ export const actions = {
 	},
 	async purgeArchive ({ commit }) {
 		await axios.delete('https://markdown.lucascarl.com/files')
+	},
+	async moveFile ({ commit }, { file, destination }) {
+		await axios.post('https://markdown.lucascarl.com/files/' + file + '/move', getFormData({destination}))
 	}
 }
 

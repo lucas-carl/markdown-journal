@@ -46,6 +46,10 @@
 					<i class="material-icons">edit</i>
 					<span>edit</span>
 				</a>
+				<a class="item" href="#" @click.prevent="showMoveForm = true">
+					<i class="material-icons">folder_open</i>
+					<span>move file</span>
+				</a>
 				<a class="item" href="#" @click.prevent="archiveFile(document.id)">
 					<i class="material-icons">archive</i>
 					<span>archive file</span>
@@ -65,7 +69,9 @@
 			@success="fileCreated" v-if="showCreateForm">
 		</create-file-form>
 
-		<edit-file-form :file="document" @close="showEditForm = false" @success="fileCreated" v-if="showEditForm"></edit-file-form>
+		<edit-file-form :file="document" @close="showEditForm = false" @success="closeDropdown" v-if="showEditForm"></edit-file-form>
+
+		<move-file-form :file="document" @close="showMoveForm = false" @success="closeDropdown" v-if="showMoveForm"></move-file-form>
 	</main>
 </template>
 
@@ -74,6 +80,7 @@
 
 	import CreateFileForm from '~/components/CreateFileForm.vue'
 	import EditFileForm from '~/components/EditFileForm.vue'
+	import MoveFileForm from '~/components/MoveFileForm.vue'
 
 	export default {
 
@@ -81,13 +88,15 @@
 			return {
 				showCreateForm: false,
 				showEditForm: false,
+				showMoveForm: false,
 				showFileDropdown: false
 			}
 		},
 
 		components: {
 			CreateFileForm,
-			EditFileForm
+			EditFileForm,
+			MoveFileForm
 		},
 
 		created() {
@@ -111,8 +120,9 @@
 
 				this.$store.dispatch('openFile', id)
 			},
-			fileCreated() {
+			closeDropdown() {
 				this.showEditForm = false
+				this.showMoveForm = false
 				this.showCreateForm = false
 				this.showFileDropdown = false
 

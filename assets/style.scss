@@ -434,10 +434,20 @@ h1, h2, h3, h4, h5, h6 {
 		transition: .2s ease;
 		padding: .5em;
 
+		p {
+			display: inline-block;
+			margin: 0;
+		}
+
 		i.material-icons {
 			color: rgba($dark, .625);
 			font-size: 1.5em;
-			margin-left: auto;
+			margin-right: .5em;
+
+			&.float-right {
+				margin-left: auto;
+				margin-right: 0;
+			}
 		}
 
 		&:hover,
