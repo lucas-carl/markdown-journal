@@ -113,12 +113,8 @@ export const actions = {
 		}
 	},
 	async createFile ({ commit }, title) {
-		let file = {
-			title, user_id: 'mail@lucascarl.com'
-		}
-
 		try {
-			let { data } = await axios.post('https://markdown.lucascarl.com/files', getFormData(file))
+			let { data } = await axios.post('https://markdown.lucascarl.com/files', getFormData({ title }))
 			commit('OPEN_DOCUMENT', data)
 		} catch (error) {
 			throw error
@@ -141,6 +137,13 @@ export const actions = {
 	},
 	async moveFile ({ commit }, { file, destination }) {
 		await axios.post('https://markdown.lucascarl.com/files/' + file + '/move', getFormData({destination}))
+	},
+	async createFolder ({ commit }, title) {
+		await axios.post('https://markdown.lucascarl.com/folders', getFormData({ title }))
+		actions.loadFolders({ commit })
+	},
+	async deleteFolder ({ commit }, id) {
+		await axios.delete('https://markdown.lucascarl.com/folders/' + id)
 	}
 }
 

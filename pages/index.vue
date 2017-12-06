@@ -4,7 +4,8 @@
 			<div class="file-tree">
 				<template v-for="folder in sortedFiles">
 					<div class="file-item folder-item" :key="folder.id" :title="folder.title">
-						<i class="material-icons">folder_open</i>
+						<i class="material-icons" v-if="folder.files.length == 0">folder_open</i>
+						<i class="material-icons" v-else>folder</i>
 						<p>{{ folder.title }}</p>
 					</div>
 					<template v-for="file in folder.files">
@@ -26,7 +27,8 @@
 			</div>
 
       <footer>
-        <a class="icon-link" href="#" title="Create new folder">
+        <a class="icon-link" href="#"
+				@click.prevent="showFolderForm = !showFolderForm" title="Create new folder">
           <i class="material-icons">create_new_folder</i>
         </a>
 				<a class="icon-link icon-right" href="#"
@@ -50,12 +52,12 @@
 					<i class="material-icons">folder_open</i>
 					<span>move file</span>
 				</a>
-				<a class="item" href="#" @click.prevent="archiveFile(document.id)">
+				<a class="item highlight-red" href="#" @click.prevent="archiveFile(document.id)">
 					<i class="material-icons">archive</i>
 					<span>archive file</span>
 				</a>
 				<hr>
-				<a class="item highlight-red" href="#" @click.prevent="logout">
+				<a class="item" href="#" @click.prevent="logout">
 					<i class="material-icons">exit_to_app</i>
 					<span>log out</span>
 				</a>
@@ -65,9 +67,10 @@
     <section class="page-content" v-html="compiledMarkDown" @click.prevent="hideDropdown"></section>
 
 		<create-file-form :archived-files="archivedFiles"
-			@close="showCreateForm = false"
-			@success="fileCreated" v-if="showCreateForm">
+			@close="showCreateForm = false" v-if="showCreateForm">
 		</create-file-form>
+
+		<create-folder-form @close="showFolderForm = false" v-if="showFolderForm"></create-folder-form>
 
 		<edit-file-form :file="document" @close="showEditForm = false" @success="closeDropdown" v-if="showEditForm"></edit-file-form>
 
@@ -81,6 +84,7 @@
 	import CreateFileForm from '~/components/CreateFileForm.vue'
 	import EditFileForm from '~/components/EditFileForm.vue'
 	import MoveFileForm from '~/components/MoveFileForm.vue'
+	import CreateFolderForm from '~/components/CreateFolderForm.vue'
 
 	export default {
 
@@ -89,6 +93,7 @@
 				showCreateForm: false,
 				showEditForm: false,
 				showMoveForm: false,
+				showFolderForm: false,
 				showFileDropdown: false
 			}
 		},
@@ -96,7 +101,8 @@
 		components: {
 			CreateFileForm,
 			EditFileForm,
-			MoveFileForm
+			MoveFileForm,
+			CreateFolderForm
 		},
 
 		created() {

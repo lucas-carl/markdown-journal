@@ -1,8 +1,8 @@
 <template>
-	<modal @close="$emit('close')" v-if="!showUnarchive">
+	<modal @close="$emit('close')" v-if="!showManager">
 		<form class="create-file-form" @submit.prevent="submitForm">
 			<div class="modal-body">
-				<h4 class="modal-title">Create new document</h4>
+				<h4 class="modal-title">Create folder</h4>
 
 				<div class="form-group floating-label">
 					<input class="custom-input" type="text" v-model="title" placeholder="Title" required autofocus>
@@ -12,10 +12,10 @@
 
 			<footer class="actions-container">
 				<button class="button ghost-button float-left"
-					type="button" @click="showUnarchive = true"
-					v-if="archivedFiles && archivedFiles.length > 0">
-					<span>ARCHIVE</span>
-					<i class="material-icons">unarchive</i>
+					type="button" @click="showManager = true"
+					v-if="folders && folders.length > 0">
+					<i class="material-icons icon-left">reorder</i>
+					<span>MANAGE</span>
 				</button>
 				<button class="button ghost-button mb-right"
 					type="button" @click="$emit('close')">
@@ -28,50 +28,46 @@
 		</form>
 	</modal>
 
-	<unarchive-file :archived-files="archivedFiles"
-		@close="showUnarchive = false" @success="$emit('close')" v-else>
-	</unarchive-file>
+	<folder-manager :folders="folders" @close="showManager = false" @success="$emit('close')" v-else></folder-manager>
 </template>
 
 <script>
 	import { mapGetters } from 'vuex'
 
 	import Modal from '~/components/Modal.vue'
-	import UnarchiveFile from '~/components/UnarchiveFile.vue'
+	import FolderManager from '~/components/FolderManager.vue'
 
 	export default {
 
 		data() {
 			return {
 				title: '',
-				showUnarchive: false
+				showManager: false
 			}
 		},
 
 		components: {
 			Modal,
-			UnarchiveFile
+			FolderManager
+		},
+
+		created() {
+			this.$store.dispatch('loadFolders')
 		},
 
 		methods: {
 			submitForm() {
 				if (this.title && this.title !== '') {
-					this.$store.dispatch('createFile', this.title).then(() => {
-						this.$router.push('/' + this.openDocument.id)
-					}).then(() => {
+					this.$store.dispatch('createFolder', this.title).then(() => {
 						this.$emit('close')
 					})
 				}
 			}
 		},
 
-		props: {
-			archivedFiles: Array
-		},
-
 		computed: {
 			...mapGetters([
-				'openDocument'
+				'folders'
 			])
 		}
 
