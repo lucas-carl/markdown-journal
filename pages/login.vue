@@ -75,10 +75,9 @@
 						alert('The confirmation does not match the password.')
 					}
 
-					this.$store.dispatch('register', { email: this.email, password: this.password }).then((response) => {
-						if (response.status === 204) {
-							this.login()
-						}
+					this.$store.dispatch('register', { email: this.email, password: this.password }).then(() => {
+						// hard reload is important
+						window.location = '/'
 					})
 				}
 			}

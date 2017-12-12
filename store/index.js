@@ -51,8 +51,12 @@ export const actions = {
 	},
 	async register ({ commit }, credentials) {
 		await axios.post('https://markdown.lucascarl.com/user', getFormData(credentials)).then((response) => {
-			if (response.status === 204) {
+			if (response.status === 200) {
 				console.log('Created new user')
+
+				localStorage.setItem('auth_token', response.data.token)
+				commit('SET_USER', response.data)
+				commit('LOGIN')
 			}
 		}, (errorResponse) => {
 			if (errorResponse.status === 412) {
