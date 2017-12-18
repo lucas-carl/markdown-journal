@@ -1,7 +1,7 @@
 {
   "name": "markdown-journal",
   "version": "1.0.0",
-  "description": "Online markdown editor",
+  "description": "Markdown Journal by Lucas Carl",
   "author": "lucas-carl <mail@lucascarl.com>",
   "private": true,
   "scripts": {
