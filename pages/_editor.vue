@@ -1,6 +1,6 @@
 <template>
   <main>
-    <section class="page-editor">
+    <section class="page-editor" v-show="!isMobileView">
       <header>
         <router-link class="icon-link link-back" to="/">
           <i class="material-icons">keyboard_arrow_left</i>
@@ -42,7 +42,12 @@
 			</text-editor>
     </section>
 
-    <section class="page-content" v-html="text" @click="hideDropdown"></section>
+    <section class="page-content" @click="hideDropdown">
+			<router-link class="back-link" to="/" v-if="isMobileView">
+				<i class="material-icons">keyboard_arrow_left</i> Back
+			</router-link>
+			<div v-html="text"></div>
+		</section>
   </main>
 </template>
 
@@ -55,13 +60,19 @@
       return {
         text: '',
 				raw: '',
-        showDropdown: false
+        showDropdown: false,
+				isMobileView: false
       }
     },
 
     components: {
       TextEditor
     },
+
+		created() {
+			this.handleViewport()
+			window.addEventListener('resize', this.handleViewport)
+		},
 
 		mounted() {
 			if (!this.$route.params.editor) {
@@ -93,7 +104,10 @@
       addTable() {
         this.showDropdown = false
         this.$refs.editor.addTable()
-      }
+      },
+			handleViewport() {
+				this.isMobileView = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 680
+			}
     },
 
 		computed: {
