@@ -24,6 +24,11 @@
 						<i class="material-icons">keyboard_arrow_right</i>
 					</a>
 				</template>
+				<div class="empty-state" v-if="validFiles && !validFiles.length">
+					<hr>
+					<p>You have no files, yet.</p>
+					<hr>
+				</div>
 			</div>
 
       <footer>
