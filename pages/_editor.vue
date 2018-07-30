@@ -22,7 +22,7 @@
           <a class="icon-link" href="#" @click.prevent="showDropdown = true">
             <i class="material-icons">expand_more</i>
           </a>
-    			<div class="dropdown" v-if="showDropdown">
+          <div class="dropdown" v-if="showDropdown">
             <a class="item" href="#" @click.prevent="addPhoto">
               <i class="material-icons">insert_photo</i>
               <span>photo</span>
@@ -31,15 +31,15 @@
               <i class="material-icons">view_list</i>
               <span>table</span>
             </a>
-    			</div>
-    		</div>
+          </div>
+        </div>
       </header>
 
       <text-editor :value="document.content"
-      	@markdown="(raw, text) => updateText(raw, text)"
-				@cmd-s="saveDocument()" @click="hideDropdown"
+        @markdown="(raw, text) => updateText(raw, text)"
+        @cmd-s="saveDocument()" @click="hideDropdown"
         ref="editor" v-if="document">
-			</text-editor>
+      </text-editor>
     </section>
 
     <section class="page-content" @click="hideDropdown">
@@ -79,24 +79,24 @@
 				this.$router.push('/')
 			}
 
-			this.$store.dispatch('openFile', this.$route.params.editor)
-		},
+      this.$store.dispatch('openFile', this.$route.params.editor)
+    },
 
     methods: {
       updateText(raw, val) {
-				this.raw = raw
+        this.raw = raw
         this.text = val
-				this.saveDocument()
+        this.saveDocument()
       },
-			saveDocument() {
-				this.$store.dispatch('saveFile', { id: this.document.id, title: this.document.title, content: this.raw })
-			},
+      saveDocument() {
+        this.$store.dispatch('saveFile', { id: this.document.id, title: this.document.title, content: this.raw })
+      },
       hideDropdown(e) {
-				if (this.showDropdown === true) {
+        if (this.showDropdown === true) {
           e.preventDefault()
-					this.showDropdown = false
-				}
-			},
+          this.showDropdown = false
+        }
+      },
       addPhoto() {
         this.showDropdown = false
         this.$refs.editor.addPhoto()
@@ -110,16 +110,22 @@
 			}
     },
 
-		computed: {
-			files() {
-				return this.$store.getters.files
-			},
-			document() {
-				return this.$store.getters.openDocument
-			}
-		},
+    computed: {
+      files() {
+        return this.$store.getters.files
+      },
+      document() {
+        return this.$store.getters.openDocument
+      }
+    },
 
-		middleware: 'auth'
+    head() {
+      return {
+        title: (this.document ? this.document.title + ' | ' : '') + 'Markdown Journal'
+      }
+    },
+
+    middleware: 'auth'
 
   }
 </script>
