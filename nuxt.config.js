@@ -14,9 +14,9 @@ module.exports = {
     ]
   },
 
-	css: [
-		{ src: '~assets/style.scss', lang: 'scss' }
-	],
+  css: [
+    { src: '~assets/style.scss', lang: 'scss' }
+  ],
   /*
   ** Customize the progress-bar color
   */
@@ -28,7 +28,7 @@ module.exports = {
     /*
     ** Run ESLINT on save
     */
-		extend (config, ctx) {
+    extend (config, ctx) {
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -39,8 +39,8 @@ module.exports = {
       }
     },
 
-		vendor: ['axios', 'marked']
+    vendor: ['axios', 'marked']
   },
 
-	mode: 'spa'
+  mode: 'spa'
 }

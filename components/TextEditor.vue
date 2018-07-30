@@ -2,7 +2,7 @@
   <textarea class="text-editor" :value="inputValue"
     @input="getInput($event.target.value)"
     @keydown.tab.prevent="addTab"
-		@keydown="keyHandle"
+    @keydown="keyHandle"
     placeholder="Write something"
     ref="editor" autofocus>
   </textarea>
@@ -26,35 +26,35 @@
       }
     },
 
-		mounted() {
-			this.$emit('markdown', this.inputValue, this.compiledMarkDown)
-		},
+    mounted() {
+      this.$emit('markdown', this.inputValue, this.compiledMarkDown)
+    },
 
     computed: {
       inputValue() {
         return this.inputText || this.value
       },
       compiledMarkDown() {
-				if (!this.inputValue) {
-					return ''
-				}
+        if (!this.inputValue) {
+          return ''
+        }
 
         return marked(this.inputValue, { sanitize: true })
       }
     },
 
     methods: {
-			keyHandle(e) {
-				if (e.key === 's' && (e.ctrlKey === true || e.metaKey === true)) {
-					e.preventDefault()
-					this.$emit('cmd-s')
-				}
+      keyHandle(e) {
+        if (e.key === 's' && (e.ctrlKey === true || e.metaKey === true)) {
+          e.preventDefault()
+          this.$emit('cmd-s')
+        }
 
-				if (e.key === 'd' && (e.ctrlKey === true || e.metaKey === true)) {
-					e.preventDefault()
-					this.duplicateLine()
-				}
-			},
+        if (e.key === 'd' && (e.ctrlKey === true || e.metaKey === true)) {
+          e.preventDefault()
+          this.duplicateLine()
+        }
+      },
       getInput(value) {
         this.inputText = value
         this.updateText()
@@ -69,33 +69,33 @@
 
         this.$emit('markdown', this.inputText, marked(this.inputText, { sanitize: true }))
       },
-			duplicateLine() {
-				let selection = this.getSelection()
-				let chunk = selection.text
+      duplicateLine() {
+        let selection = this.getSelection()
+        let chunk = selection.text
 
-				if (selection.length === 0) {
-					while (!(chunk.match(/\n/g) || []).length) {
-						if (selection.start <= 1) {
-							break
-						}
+        if (selection.length === 0) {
+          while (!(chunk.match(/\n/g) || []).length) {
+            if (selection.start <= 1) {
+              break
+            }
 
-						this.setSelection(selection.start - 2, selection.end)
-						selection = this.getSelection()
-						chunk = selection.text
-					}
+            this.setSelection(selection.start - 2, selection.end)
+            selection = this.getSelection()
+            chunk = selection.text
+          }
 
-					if (chunk.charAt(1) === '\\') {
-						chunk = chunk.substr(1)
-					}
-				}
+          if (chunk.charAt(1) === '\\') {
+            chunk = chunk.substr(1)
+          }
+        }
 
-				if (selection.end > 1) {
-					this.setSelection(selection.end, selection.end)
-					this.replaceSelection('\n' + chunk)
-				}
+        if (selection.end > 1) {
+          this.setSelection(selection.end, selection.end)
+          this.replaceSelection('\n' + chunk)
+        }
 
         this.updateText()
-			},
+      },
       addTab() {
         this.updateText('\n  ')
       },

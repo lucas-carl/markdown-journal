@@ -12,10 +12,10 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-		'indent': 0,
-		'no-tabs': 0,
-		'space-before-function-paren': 0,
-		'comma-dangle': 0
-	},
+    'indent': 0,
+    'no-tabs': 0,
+    'space-before-function-paren': 0,
+    'comma-dangle': 0
+  },
   globals: {}
 }
