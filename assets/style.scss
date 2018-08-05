@@ -107,6 +107,7 @@ section {
       right: 1rem;
       transform: translateY(-50%);
       visibility: hidden;
+      user-select: none;
     }
 
     &.active {
@@ -139,18 +140,18 @@ section {
   .folder-item {
     padding-left: 5rem;
 
-		.material-icons {
-			visibility: visible;
-			left: 2rem;
-		}
-	}
+    .material-icons {
+      visibility: visible;
+      left: 2rem;
+    }
+  }
 
-	.empty-state {
-		font-size: 1.125em;
-		font-weight: 500;
-		text-align: center;
-		padding: 1rem 2rem;
-	}
+  .empty-state {
+    font-size: 1.125em;
+    font-weight: 500;
+    text-align: center;
+    padding: 1rem 2rem;
+  }
 }
 
 .page-content {
@@ -159,12 +160,12 @@ section {
   overflow-y: auto;
   padding: 2em;
 
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		text-decoration: none;
-		margin-bottom: 1em;
-	}
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 1em;
+  }
 }
 
 .page-menu {

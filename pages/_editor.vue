@@ -43,11 +43,11 @@
     </section>
 
     <section class="page-content" @click="hideDropdown">
-			<router-link class="back-link" to="/" v-if="isMobileView">
-				<i class="material-icons">keyboard_arrow_left</i> Back
-			</router-link>
-			<div v-html="text"></div>
-		</section>
+      <router-link class="back-link" to="/" v-if="isMobileView">
+        <i class="material-icons">keyboard_arrow_left</i> Back
+      </router-link>
+      <div v-html="text"></div>
+    </section>
   </main>
 </template>
 
@@ -59,9 +59,9 @@
     data() {
       return {
         text: '',
-				raw: '',
+        raw: '',
         showDropdown: false,
-				isMobileView: false
+        isMobileView: false
       }
     },
 
@@ -69,15 +69,15 @@
       TextEditor
     },
 
-		created() {
-			this.handleViewport()
-			window.addEventListener('resize', this.handleViewport)
-		},
+    created() {
+      this.handleViewport()
+      window.addEventListener('resize', this.handleViewport)
+    },
 
-		mounted() {
-			if (!this.$route.params.editor) {
-				this.$router.push('/')
-			}
+    mounted() {
+      if (!this.$route.params.editor) {
+        this.$router.push('/')
+      }
 
       this.$store.dispatch('openFile', this.$route.params.editor)
     },
@@ -105,9 +105,9 @@
         this.showDropdown = false
         this.$refs.editor.addTable()
       },
-			handleViewport() {
-				this.isMobileView = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 680
-			}
+      handleViewport() {
+        this.isMobileView = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 680
+      }
     },
 
     computed: {

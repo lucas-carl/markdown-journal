@@ -1,35 +1,22 @@
 <template>
-	<main>
-		<section class="page-sidebar" @click.prevent="hideDropdown">
-			<div class="file-tree">
-				<template v-for="folder in sortedFiles">
-					<div class="file-item folder-item" :key="folder.id" :title="folder.title">
-						<i class="material-icons" v-if="folder.files.length == 0">folder_open</i>
-						<i class="material-icons" v-else>folder</i>
-						<p>{{ folder.title }}</p>
-					</div>
-					<template v-for="file in folder.files">
-						<a class="file-item sorted" :class="{active: (document && file.id == document.id)}"
-							:key="file.id" :title="file.title"
-							href="#" @click.prevent="openFile(file.id)">
-							<p>{{ file.title }}</p>
-							<i class="material-icons">keyboard_arrow_right</i>
-						</a>
-					</template>
-				</template>
-				<template v-for="file in unsortedFiles">
-					<a class="file-item" :class="{active: (document && file.id == document.id)}" :title="file.title"
-						:key="file.id" href="#" @click.prevent="openFile(file.id)">
-						<p>{{ file.title }}</p>
-						<i class="material-icons">keyboard_arrow_right</i>
-					</a>
-				</template>
-				<div class="empty-state" v-if="validFiles && !validFiles.length">
-					<hr>
-					<p>You have no files, yet.</p>
-					<hr>
-				</div>
-			</div>
+  <main>
+    <section class="page-sidebar" @click.prevent="hideDropdown">
+      <div class="file-tree">
+        <folder-item :key="folder.id" :folder="folder" @open="openFile"
+          v-for="folder in sortedFiles"></folder-item>
+        <template v-for="file in unsortedFiles">
+          <a class="file-item" :class="{active: (document && file.id == document.id)}" :title="file.title"
+            :key="file.id" href="#" @click.prevent="openFile(file.id)">
+            <p>{{ file.title }}</p>
+            <i class="material-icons">keyboard_arrow_right</i>
+          </a>
+        </template>
+        <div class="empty-state" v-if="validFiles && !validFiles.length">
+          <hr>
+          <p>You have no files, yet.</p>
+          <hr>
+        </div>
+      </div>
 
       <footer>
         <a class="icon-link" href="#"
@@ -90,6 +77,7 @@
   import EditFileForm from '~/components/EditFileForm.vue'
   import MoveFileForm from '~/components/MoveFileForm.vue'
   import CreateFolderForm from '~/components/CreateFolderForm.vue'
+  import FolderItem from '~/components/FolderItem.vue'
 
   export default {
 
@@ -107,7 +95,8 @@
       CreateFileForm,
       EditFileForm,
       MoveFileForm,
-      CreateFolderForm
+      CreateFolderForm,
+      FolderItem
     },
 
     created() {
