@@ -1,11 +1,11 @@
 {
   "name": "markdown-journal",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Markdown Journal by Lucas Carl",
   "author": "lucas-carl <mail@lucascarl.com>",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "BASE_URL=http://md-api:8888/ nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

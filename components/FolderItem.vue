@@ -1,5 +1,5 @@
 <template>
-  <div class="item-group" v-if="folder.files.length > 0">
+  <div class="item-group">
     <div class="file-item folder-item" :title="folder.title" @click="toggleFolder">
       <i class="material-icons">{{ isOpen ? 'folder_open' : 'folder' }}</i>
       <p>{{ folder.title }}</p>
@@ -44,7 +44,7 @@
 
     computed: {
       isOpen() {
-        if (this.document && this.document.folder_id === this.folder.id) {
+        if ((this.document && this.document.folder_id === this.folder.id) || this.folder.files.length === 0) {
           return true
         }
 

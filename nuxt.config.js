@@ -17,10 +17,16 @@ module.exports = {
   css: [
     { src: '~assets/style.scss', lang: 'scss' }
   ],
+
   /*
   ** Customize the progress-bar color
   */
   loading: { color: '#5c5ce6' },
+
+  env: {
+    baseUrl: process.env.BASE_URL || 'https://markdown.lucascarl.com/'
+  },
+
   /*
   ** Build configuration
   */

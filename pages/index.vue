@@ -186,14 +186,14 @@
           return null
         }
 
-        return this.files.filter(file => file.not_deleted === '1')
+        return this.files.filter(file => file.deleted_at == null)
       },
       archivedFiles() {
         if (!this.files) {
           return null
         }
 
-        return this.files.filter(file => file.not_deleted === '0')
+        return this.files.filter(file => file.deleted_at != null)
       }
     },
 
