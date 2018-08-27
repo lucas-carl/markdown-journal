@@ -8,4 +8,17 @@ let options = {
   }
 }
 
-export default axios.create(options)
+const Axios = axios.create(options)
+
+// Add a 500 response interceptor
+Axios.interceptors.response.use((response) => {
+  return response
+}, (error) => {
+  if (error.response.status === 500) {
+    console.error(error.response)
+  } else {
+    return Promise.reject(error)
+  }
+})
+
+export default Axios
