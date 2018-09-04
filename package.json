@@ -5,7 +5,7 @@
   "author": "lucas-carl <mail@lucascarl.com>",
   "private": true,
   "scripts": {
-    "dev": "BASE_URL=http://md-api:8888/ nuxt",
+    "dev": "BASE_URL=http://md-api.test/ nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@nuxtjs/pwa": "^2.5.0",
     "axios": "^0.16.2",
     "marked": "^0.3.6",
     "nuxt": "^1.0.0-rc5"

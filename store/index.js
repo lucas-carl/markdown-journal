@@ -140,7 +140,8 @@ export const actions = {
     await axios.delete('files')
   },
   async moveFile ({ commit }, { file, destination }) {
-    await axios.post('files/' + file + '/move', getFormData({destination}))
+    const data = destination === false ? null : getFormData({destination})
+    await axios.post('files/' + file + '/move', data)
   },
   async createFolder ({ commit }, title) {
     await axios.post('folders', getFormData({ title }))
@@ -164,8 +165,38 @@ export const getters = {
   files: (state) => {
     return state.files
   },
-  folders: (state) => {
-    return state.folders
+  validFiles: (state) => {
+    if (!state.files) {
+      return null
+    }
+
+    return state.files.filter(file => file.deleted_at == null)
+  },
+  folders: (state, getters) => {
+    if (!getters.validFiles) {
+      return null
+    }
+
+    return state.folders.map(folder => {
+      return {
+        ...folder,
+        files: getters.validFiles.filter(file => file.folder_id === folder.id)
+      }
+    })
+  },
+  unsortedFiles: (state, getters) => {
+    if (!getters.validFiles) {
+      return null
+    }
+
+    return getters.validFiles.filter(file => file.folder_id == null)
+  },
+  archivedFiles: (state) => {
+    if (!state.files) {
+      return null
+    }
+
+    return state.files.filter(file => file.deleted_at != null)
   }
 }
 

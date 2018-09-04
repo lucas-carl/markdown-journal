@@ -3,7 +3,7 @@
     <section class="page-sidebar" @click.prevent="hideDropdown">
       <div class="file-tree">
         <folder-item :key="folder.id" :folder="folder" @open="openFile"
-          v-for="folder in sortedFiles"></folder-item>
+          v-for="folder in folders"></folder-item>
         <template v-for="file in unsortedFiles">
           <a class="file-item" :class="{active: (document && file.id == document.id)}" :title="file.title"
             :key="file.id" href="#" @click.prevent="openFile(file.id)">
@@ -151,8 +151,20 @@
       files() {
         return this.$store.getters.files
       },
+      folders() {
+        return this.$store.getters.folders
+      },
       document() {
         return this.$store.getters.openDocument
+      },
+      unsortedFiles() {
+        return this.$store.getters.unsortedFiles
+      },
+      validFiles() {
+        return this.$store.getters.validFiles
+      },
+      archivedFiles() {
+        return this.$store.getters.archivedFiles
       },
       compiledMarkDown() {
         if (!this.document || !this.document.content) {
@@ -160,40 +172,6 @@
         }
 
         return marked(this.document.content, { sanitize: true })
-      },
-      sortedFiles() {
-        let folders = this.$store.getters.folders
-
-        if (!folders || !this.validFiles) {
-          return null
-        }
-
-        folders.forEach(folder => {
-          folder.files = this.validFiles.filter(file => file.folder_id === folder.id)
-        })
-
-        return folders
-      },
-      unsortedFiles() {
-        if (!this.validFiles) {
-          return null
-        }
-
-        return this.validFiles.filter(file => !file.folder_id)
-      },
-      validFiles() {
-        if (!this.files) {
-          return null
-        }
-
-        return this.files.filter(file => file.deleted_at == null)
-      },
-      archivedFiles() {
-        if (!this.files) {
-          return null
-        }
-
-        return this.files.filter(file => file.deleted_at != null)
       }
     },
 

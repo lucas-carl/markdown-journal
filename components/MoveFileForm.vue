@@ -5,7 +5,7 @@
         <h4 class="modal-title">Move file</h4>
 
         <div class="files-list" v-for="folder in folders">
-          <a class="list-item active" href="#" @click.prevent="moveFile(null)" v-if="file.folder_id === folder.id">
+          <a class="list-item active" href="#" @click.prevent="moveFile(false)" v-if="file.folder_id === folder.id">
             <i class="material-icons">unarchive</i>
             <p>{{ folder.title }}</p>
           </a>
