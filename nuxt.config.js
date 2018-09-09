@@ -48,19 +48,5 @@ module.exports = {
     vendor: ['axios', 'marked']
   },
 
-  /*
-  ** Customize app manifest
-  */
-  manifest: {
-    theme_color: '#5c5ce6'
-  },
-
-  /*
-  ** Modules
-  */
-  modules: [
-    ['@nuxtjs/pwa', { icon: false }]
-  ],
-
   mode: 'spa'
 }

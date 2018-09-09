@@ -13,7 +13,6 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/pwa": "^2.5.0",
     "axios": "^0.16.2",
     "marked": "^0.3.6",
     "nuxt": "^1.0.0-rc5"
